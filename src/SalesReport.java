@@ -67,7 +67,6 @@ public class SalesReport {
         List<String> command = javaCommand(SON,ARGUMENTS);
         ProcessBuilder pb= new ProcessBuilder(command);
         Process son = pb.start();
-
         return son;
     }
 
