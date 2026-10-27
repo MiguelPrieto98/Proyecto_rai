@@ -30,7 +30,6 @@ public class SalesReport {
     public static final String MESSAGE_CHILD_DEPARTURE="; Su salida es : ";
     public static final String MESSAGE_CODE_END="El hijo ha terminado con el código ";
     public static final String SON="ShopSummary";
-    public static final String ARGUMENTS="1";
     public static final String PID="El pid del hijo es ";
     public static final String TU="El total de unidades es ";
     public static final String TC="El total de centimos es ";
@@ -52,6 +51,12 @@ public class SalesReport {
      * @return lo que ha tardado el informe, en milisegundos
      */
     static long report(boolean allAtOnce) throws IOException, InterruptedException {
+        totalUnits=0;
+        totalCents=0;
+        int reportStart=0;
+        for(int i=0;i<SHOPS;i++){
+            launch(i);
+        }
         // TODO fases 2 y 5
         return 0;
     }
@@ -64,12 +69,15 @@ public class SalesReport {
      * @return el proceso hijo, ya lanzado
      */
     static Process launch(int shop) throws IOException {
-        List<String> command = javaCommand(SON,ARGUMENTS);
-        ProcessBuilder pb= new ProcessBuilder(command);
-        Process son = pb.start();
-        pb.redirectError(ProcessBuilder.Redirect.INHERIT);
-        return son;
-    }
+
+            List<String> command = javaCommand(SON, shop=Integer.toString());
+            ProcessBuilder pb = new ProcessBuilder(command);
+             pb.redirectError(ProcessBuilder.Redirect.INHERIT);
+             Process son = pb.start();
+
+            return son;
+        }
+
 
     /**
      * Recoge el resultado de un hijo y lo suma a los totales.
@@ -88,8 +96,8 @@ public class SalesReport {
         BufferedReader son_departure =child.inputReader();
         String line =son_departure.readLine();
         String parts[]=line.split(";");
-        int units = Integer.parseInt(parts[0]);
-        int cents = Integer.parseInt(parts[1]);
+        long units = Long.parseLong(parts[0]);
+        long cents = Long.parseLong(parts[1]);
         totalUnits +=units;
         totalCents +=cents;
         System.out.println(PID+child.pid()+TU+units+TC+cents);
