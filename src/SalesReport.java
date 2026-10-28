@@ -33,6 +33,7 @@ public class SalesReport {
     public static final String PID="El pid del hijo es ";
     public static final String TU="El total de unidades es ";
     public static final String TC="El total de centimos es ";
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // TODO fase 2: sustituir lo anterior por el informe uno a uno: report(false).
@@ -53,12 +54,25 @@ public class SalesReport {
     static long report(boolean allAtOnce) throws IOException, InterruptedException {
         totalUnits=0;
         totalCents=0;
-        int reportStart=0;
+        long totaltime=0;
+        long reportStart=0,reportEnd=0;
+        ArrayList<Process> stores = new ArrayList<Process>();
+        reportStart=System.currentTimeMillis();
         for(int i=0;i<SHOPS;i++){
-            launch(i);
+           int idstore=i+1;
+            Process store;
+            store= launch(idstore);
+            stores.add(store);
+            collect(store,i);
         }
+        reportEnd=System.currentTimeMillis();
+        System.out.println(TU+totalUnits+TC+totalCents );
+
+        totaltime =  reportEnd-reportStart;
+
+
         // TODO fases 2 y 5
-        return 0;
+        return totaltime;
     }
 
     /**
@@ -70,7 +84,7 @@ public class SalesReport {
      */
     static Process launch(int shop) throws IOException {
 
-            List<String> command = javaCommand(SON, shop=Integer.toString());
+            List<String> command = javaCommand(SON, String.valueOf(shop));
             ProcessBuilder pb = new ProcessBuilder(command);
              pb.redirectError(ProcessBuilder.Redirect.INHERIT);
              Process son = pb.start();
@@ -95,9 +109,12 @@ public class SalesReport {
         // TODO fases 2 y 3
         BufferedReader son_departure =child.inputReader();
         String line =son_departure.readLine();
-        String parts[]=line.split(";");
-        long units = Long.parseLong(parts[0]);
-        long cents = Long.parseLong(parts[1]);
+        String parts[]={};
+        parts= line.split(";");
+        String bugUnits =parts[0].trim();
+        String bugCents =parts[1].trim();
+        long units = Long.parseLong(bugUnits);
+        long cents = Long.parseLong(bugCents);
         totalUnits +=units;
         totalCents +=cents;
         System.out.println(PID+child.pid()+TU+units+TC+cents);
