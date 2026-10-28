@@ -111,21 +111,36 @@ public class SalesReport {
      */
     static void collect(Process child, int shop) throws IOException, InterruptedException {
         // TODO fases 2 y 3
-        BufferedReader son_departure =child.inputReader();
-        String line =son_departure.readLine();
-        String parts[]={};
-        parts= line.split(";");
-        String bugUnits =parts[0].trim();
-        String bugCents =parts[1].trim();
-        long units = Long.parseLong(bugUnits);
-        long cents = Long.parseLong(bugCents);
-        double euros = Double.parseDouble(String.valueOf(cents))/100;
-        totalUnits +=units;
-        totalCents +=cents;
-        System.out.printf("%s%d%s%d%s%d%s%.2f%n", SHOP, shop, PID, child.pid(), TU, units, EUROS, euros);
-        System.out.println(MESSAGE_PID_CHILD + child.pid() + MESSAGE_CHILD_DEPARTURE + line);
-        int code= child.waitFor();
-        System.out.println(MESSAGE_CODE_END+code);
+        boolean finishedOnTime= child.waitFor(TIMEOUT,TimeUnit.SECONDS);
+
+
+        if(child.exitValue()!=0){
+            failedShops+=1;
+        }else {
+            if(!finishedOnTime){
+                child.destroyForcibly();
+                child.waitFor();
+                failedShops+=1;
+            } else{
+            BufferedReader son_departure =child.inputReader();
+            String line =son_departure.readLine();
+            String parts[]={};
+            parts= line.split(";");
+            String bugUnits =parts[0].trim();
+            String bugCents =parts[1].trim();
+            long units = Long.parseLong(bugUnits);
+            long cents = Long.parseLong(bugCents);
+            double euros = Double.parseDouble(String.valueOf(cents))/100;
+            totalUnits +=units;
+            totalCents +=cents;
+            int code =child.waitFor();
+            System.out.printf("%s%d%s%d%s%d%s%.2f%n", SHOP, shop, PID, child.pid(), TU, units, EUROS, euros);
+            System.out.println(MESSAGE_PID_CHILD + child.pid() + MESSAGE_CHILD_DEPARTURE + line);
+            System.out.println(MESSAGE_CODE_END+code);
+            }
+
+        }
+
     }
 
     /**
