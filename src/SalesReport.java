@@ -26,13 +26,16 @@ public class SalesReport {
     static long totalUnits = 0;  // unidades vendidas en todas las tiendas
     static long totalCents = 0;  // importe de todas las tiendas, en céntimos
     static int failedShops = 0;// tiendas que han fallado o no han respondido a tiempo (fase 3)
-    public static final String  MESSAGE_PID_CHILD="El hijo lanzo un pid ";
+    public static final String  MESSAGE_PID_CHILD= "El hijo lanzo un pid ";
     public static final String MESSAGE_CHILD_DEPARTURE="; Su salida es : ";
-    public static final String MESSAGE_CODE_END="El hijo ha terminado con el código ";
+    public static final String MESSAGE_CODE_END=" El hijo ha terminado con el código ";
     public static final String SON="ShopSummary";
-    public static final String PID="El pid del hijo es ";
-    public static final String TU="El total de unidades es ";
-    public static final String TC="El total de centimos es ";
+    public static final String PID=" El pid del hijo es ";
+    public static final String TU=" El total de unidades es ";
+    public static final String TC=" El total de centimos es ";
+    public static final String EUROS=" El total de euros es ";
+    public static final String SHOP=" La tienda ";
+    public static final String ENDREPOR=" su tiempo de ejecucion es ";
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -63,12 +66,13 @@ public class SalesReport {
             Process store;
             store= launch(idstore);
             stores.add(store);
-            collect(store,i);
+            collect(store,idstore);
         }
         reportEnd=System.currentTimeMillis();
-        System.out.println(TU+totalUnits+TC+totalCents );
+        totaltime =  (reportEnd-reportStart);
+        System.out.println(TU+totalUnits+TC+totalCents+ENDREPOR+totaltime );
 
-        totaltime =  reportEnd-reportStart;
+
 
 
         // TODO fases 2 y 5
@@ -115,10 +119,11 @@ public class SalesReport {
         String bugCents =parts[1].trim();
         long units = Long.parseLong(bugUnits);
         long cents = Long.parseLong(bugCents);
+        double euros = Double.parseDouble(String.valueOf(cents))/100;
         totalUnits +=units;
         totalCents +=cents;
-        System.out.println(PID+child.pid()+TU+units+TC+cents);
-        System.out.println(MESSAGE_PID_CHILD+child.pid()+MESSAGE_CHILD_DEPARTURE);
+        System.out.printf("%s%d%s%d%s%d%s%.2f%n", SHOP, shop, PID, child.pid(), TU, units, EUROS, euros);
+        System.out.println(MESSAGE_PID_CHILD + child.pid() + MESSAGE_CHILD_DEPARTURE + line);
         int code= child.waitFor();
         System.out.println(MESSAGE_CODE_END+code);
     }
