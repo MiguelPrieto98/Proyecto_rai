@@ -1,3 +1,4 @@
+import java.nio.file.LinkOption;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -14,7 +15,11 @@ import java.util.Random;
  */
 public class CashRegister {
 
-    static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");  // hora con ms
+    static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("HH:mm:ss.SSS"); // hora con ms
+     static final String MSG_TICKET=" se ha creado el ticket ";
+     static final String MSG_FINISH=" Tickets finalizado";
+     static final String SEPARATOR=";";
+
 
     public static void main(String[] args) throws InterruptedException {
         int tickets = Integer.parseInt(args[0]);
@@ -24,5 +29,13 @@ public class CashRegister {
         // TODO fase 4: para cada ticket, del 1 a tickets, esperar la pausa, escribir en la salida
         //      estándar "número;céntimos" con un importe aleatorio y anotar en la salida de error
         //      la hora (TIME) y el número del ticket. Al terminar, anotar también la hora.
+        for(int i=1;i<=tickets;i++){
+            Thread.sleep(pause);
+            String create_ticket= String.valueOf(Math.max(0,random.nextInt(10000)));
+            System.out.println(i+SEPARATOR+create_ticket);
+            System.err.println(LocalTime.now().format(TIME)+MSG_TICKET+i);
+
+        }
+        System.err.println(LocalTime.now().format(TIME)+MSG_FINISH);
     }
 }
