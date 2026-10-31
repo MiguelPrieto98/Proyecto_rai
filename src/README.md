@@ -95,6 +95,45 @@ Aunque se ejecuten los ocho procesos a la vez, existen costes de creación y ges
 
 
 ## Caja en directo
+#### Fase 4
+    Escenario 1, caja lenta y registro rápido: 5 tickets; pausa de la caja, 500 ms, y del registro, 0
+    17:49:34.033 se ha creado el ticket 1
+    17:49:34.0331 3673
+    17:49:34.538 se ha creado el ticket 2
+    17:49:34.5382 1042
+    17:49:35.039 se ha creado el ticket 3
+    17:49:35.0393 4443
+    17:49:35.539 se ha creado el ticket 4
+    17:49:35.5394 6887
+    17:49:36.040 se ha creado el ticket 5
+    17:49:36.0405 8963
+    17:49:36.040 Tickets finalizado
+    leadger fin de la entrada: 5 tickets 250.08 Euros
+    Escenario 2, caja rápida y registro lento: 10 tickets; pausa de la caja, 0, y del registro, 300 ms.
+    17:49:36.192 se ha creado el ticket 1
+    17:49:36.198 se ha creado el ticket 2
+    17:49:36.198 se ha creado el ticket 3
+    17:49:36.198 se ha creado el ticket 4
+    17:49:36.198 se ha creado el ticket 5
+    17:49:36.198 se ha creado el ticket 6
+    17:49:36.199 se ha creado el ticket 7
+    17:49:36.199 se ha creado el ticket 8
+    17:49:36.199 se ha creado el ticket 9
+    17:49:36.199 se ha creado el ticket 10
+    17:49:36.1921 393
+    17:49:36.199 Tickets finalizado
+    17:49:36.5022 2245
+    17:49:36.8023 9768
+    17:49:37.1034 190
+    17:49:37.4045 9943
+    17:49:37.7056 1481
+    17:49:38.0067 5557
+    17:49:38.3068 8394
+    17:49:38.6079 6409
+    17:49:38.90810 1087
+    leadger fin de la entrada: 10 tickets 454.67 Euros
+    
+    Process finished with exit code 0
 
 [Las trazas de los dos escenarios y qué demuestran: quién espera en cada uno y por qué.]
 

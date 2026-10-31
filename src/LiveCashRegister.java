@@ -13,13 +13,24 @@ import java.util.List;
  * Uso: java LiveCashRegister
  */
 public class LiveCashRegister {
-
+    static final String SCENARIO_ONE=" Escenario 1, caja lenta y registro rápido: 5 tickets; pausa de la caja, 500 ms, y del registro, 0";
+    final static  String TICKET_S_ONE="5";
+    final static String PAUSE_CASH_ONE="500";
+    final static String PAUSE_LEDGER_ONE="0";
+    static final String SCENARIO_TWO="Escenario 2, caja rápida y registro lento: 10 tickets; pausa de la caja, 0, y del registro, 300 ms.";
+    final static  String TICKET_S_TWO="10";
+    final static String PAUSE_CASH_TWO="0";
+    final static String PAUSE_LEDGER_TWO="300";
     public static void main(String[] args) throws IOException, InterruptedException {
         // TODO fase 4: ejecutar los dos escenarios con runScenario(), escribiendo antes cuál es.
         //      Escenario 1, caja lenta y registro rápido: 5 tickets; pausa de la caja, 500 ms,
         //      y del registro, 0.
         //      Escenario 2, caja rápida y registro lento: 10 tickets; pausa de la caja, 0, y del
         //      registro, 300 ms.
+        System.out.println(SCENARIO_ONE);
+        runScenario(TICKET_S_ONE,PAUSE_CASH_ONE,PAUSE_LEDGER_ONE);
+        System.out.println(SCENARIO_TWO);
+        runScenario(TICKET_S_TWO,PAUSE_CASH_TWO,PAUSE_LEDGER_TWO);
     }
 
     /**
@@ -31,11 +42,21 @@ public class LiveCashRegister {
      * @param registerPause pausa de la caja antes de cada ticket, en ms
      * @param ledgerPause   pausa del registro después de cada ticket, en ms
      */
+    static final String CASH="CashRegister";
+    static final String LEDGER="Ledger";
+
     static void runScenario(String tickets, String registerPause, String ledgerPause)
             throws IOException, InterruptedException {
         // TODO fase 4
-        ProcessBuilder cash = new ProcessBuilder();
-        ProcessBuilder ledger = new ProcessBuilder();
+        ProcessBuilder cash = new ProcessBuilder(javaCommand(CASH,tickets,registerPause));
+        ProcessBuilder ledger = new ProcessBuilder(javaCommand(LEDGER,ledgerPause));
+        cash.redirectError(ProcessBuilder.Redirect.INHERIT);
+        ledger.redirectError(ProcessBuilder.Redirect.INHERIT);
+        ledger.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        List<Process> proces = ProcessBuilder.startPipeline(List.of(cash,ledger));
+        for(Process p:proces){
+            p.waitFor();
+        }
     }
 
     /**
