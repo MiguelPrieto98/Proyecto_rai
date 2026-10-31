@@ -19,8 +19,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class SalesReport {
 
-    static final int SHOPS = 8;     // número de tiendas; en la fase 3, probad con 9
-    static final int TIMEOUT = 30;  // segundos de espera máxima por hijo; en la fase 3, probad con 0
+    static final int SHOPS = 9;     // número de tiendas; en la fase 3, probad con 9
+    static final int TIMEOUT = 0;  // segundos de espera máxima por hijo; en la fase 3, probad con 0
     static final Locale ES = Locale.of("es", "ES");  // para escribir los números con formato español
 
     static long totalUnits = 0;  // unidades vendidas en todas las tiendas
@@ -36,6 +36,7 @@ public class SalesReport {
     public static final String EUROS=" El total de euros es ";
     public static final String SHOP=" La tienda ";
     public static final String ENDREPOR=" su tiempo de ejecucion es ";
+    public static final String FAILSHOPS="Tiendas que han fallado: ";
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -113,15 +114,19 @@ public class SalesReport {
         // TODO fases 2 y 3
         boolean finishedOnTime= child.waitFor(TIMEOUT,TimeUnit.SECONDS);
 
+        if(!finishedOnTime){
 
-        if(child.exitValue()!=0){
-            failedShops+=1;
+            child.destroyForcibly();
+            child.waitFor();
+            failedShops++;
+            System.out.println(FAILSHOPS+failedShops);
+
         }else {
-            if(!finishedOnTime){
-                child.destroyForcibly();
-                child.waitFor();
-                failedShops+=1;
+                if(child.exitValue()!=0){
+                    failedShops++;
+                    System.out.println(FAILSHOPS+failedShops);
             } else{
+                int code =child.waitFor();
             BufferedReader son_departure =child.inputReader();
             String line =son_departure.readLine();
             String parts[]={};
@@ -133,7 +138,6 @@ public class SalesReport {
             double euros = Double.parseDouble(String.valueOf(cents))/100;
             totalUnits +=units;
             totalCents +=cents;
-            int code =child.waitFor();
             System.out.printf("%s%d%s%d%s%d%s%.2f%n", SHOP, shop, PID, child.pid(), TU, units, EUROS, euros);
             System.out.println(MESSAGE_PID_CHILD + child.pid() + MESSAGE_CHILD_DEPARTURE + line);
             System.out.println(MESSAGE_CODE_END+code);

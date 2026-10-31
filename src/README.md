@@ -79,6 +79,20 @@ Aunque se ejecuten los ocho procesos a la vez, existen costes de creación y ges
     Su tiempo de ejecucion es 6271 ms
 
     Process finished with exit code 0
+#### Fase 3
+    Tiendas que han fallado: 1
+    Tiendas que han fallado: 2
+    Tiendas que han fallado: 3
+    Tiendas que han fallado: 4
+    Tiendas que han fallado: 5
+    Tiendas que han fallado: 6
+    Tiendas que han fallado: 7
+    Tiendas que han fallado: 8
+    Tiendas que han fallado: 9
+    El total de unidades es 0
+    El total de centimos es 0
+    Su tiempo de ejecucion es 105 ms
+
 
 ## Caja en directo
 
@@ -89,4 +103,5 @@ Aunque se ejecuten los ocho procesos a la vez, existen costes de creación y ges
 - Durante el desarrollo también fue necesario ajustar el identificador de tienda, ya que el bucle comenzaba en 0 mientras que las tiendas válidas iban de la 1 a la 8. Se solucionó utilizando una variable auxiliar con i + 1 para trabajar con el identificador real de tienda.
 - Me encontré con un error al convertir los valores a long. Al depurar vi que los datos recibidos del hijo llevaban espacios en blanco ocultos alrededor del separador ;, por lo que el parseo fallaba. La solución fue eliminar esos espacios antes de hacer la conversión.
 - Al probar el informe apareció un error porque el bucle empezaba en 0 y se intentaba lanzar una tienda inexistente. La solución fue crear una variable con i + 1 y usarla como identificador real de tienda.
+- En la fase 3 una de las partes que más me hizo pensar no fue el código en sí, sino el orden de las comprobaciones. Tuve que decidir si comprobar primero el tiempo límite o el código de salida del proceso hijo para asegurar que solo se leyera el resultado cuando el proceso hubiera terminado correctamente.
 ]
