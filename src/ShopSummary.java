@@ -16,11 +16,13 @@ public class ShopSummary {
     static final int SHOPS = 8;
     static final int SALES = 50_000_000;  // ventas que se simulan en cada tienda
     static final int[] PRICES = {450, 105, 120, 899, 185, 260, 310, 65, 199, 225};  // céntimos
-    public static final String MESSAGE_FAIL="Uso: java ShopSummary <tienda>";
-    public static final String MESSAGE_NUMBER_FAIL="La tienda tiene que ser un número: ";
-    public static final String MESSAGE_STORE_DOES_NOT_EXIST="No existe la tienda ";
-    public static final String MESSAGE_STORE_NUMBER=": hay de la 1 a la ";
-    public static final String SEPARATOR=" ; ";
+    static final String MESSAGE_FAIL="Uso: java ShopSummary <tienda>";
+    static final String MESSAGE_NUMBER_FAIL="La tienda tiene que ser un número: ";
+    static final String MESSAGE_STORE_DOES_NOT_EXIST="No existe la tienda ";
+    static final String MESSAGE_STORE_NUMBER=": hay de la 1 a la ";
+    static final String SEPARATOR=" ; ";
+
+
     public static void main(String[] args) {
         if (args.length != 1) {
             System.err.println(MESSAGE_FAIL);

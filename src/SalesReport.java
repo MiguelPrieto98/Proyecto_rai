@@ -26,17 +26,17 @@ public class SalesReport {
     static long totalUnits = 0;  // unidades vendidas en todas las tiendas
     static long totalCents = 0;  // importe de todas las tiendas, en céntimos
     static int failedShops = 0;// tiendas que han fallado o no han respondido a tiempo (fase 3)
-    public static final String  MESSAGE_PID_CHILD= "El hijo lanzo un pid ";
-    public static final String MESSAGE_CHILD_DEPARTURE="; Su salida es : ";
-    public static final String MESSAGE_CODE_END=" El hijo ha terminado con el código ";
-    public static final String SON="ShopSummary";
-    public static final String PID=" El pid del hijo es ";
-    public static final String TU=" El total de unidades es ";
-    public static final String TC=" El total de centimos es ";
-    public static final String EUROS=" El total de euros es ";
-    public static final String SHOP=" La tienda ";
-    public static final String ENDREPOR=" su tiempo de ejecucion es ";
-    public static final String FAILSHOPS="Tiendas que han fallado: ";
+     static final String  MESSAGE_PID_CHILD= "El hijo lanzo un pid ";
+     static final String MESSAGE_CHILD_DEPARTURE="; Su salida es : ";
+     static final String MESSAGE_CODE_END=" El hijo ha terminado con el código ";
+     static final String SON="ShopSummary";
+     static final String PID=" El pid del hijo es ";
+     static final String TU=" El total de unidades es ";
+     static final String TC=" El total de centimos es ";
+     static final String EUROS=" El total de euros es ";
+     static final String SHOP=" La tienda ";
+     static final String ENDREPOR=" su tiempo de ejecucion es ";
+     static final String FAILSHOPS="Tiendas que han fallado: ";
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -151,11 +151,11 @@ public class SalesReport {
      * Construye el comando que ejecuta la clase indicada con la misma JVM y el mismo classpath que
      * este programa. Ya está hecho: es el comandoJava del ejemplo 6.3.
      */
-    public static final String JAVA_FILE="java.home";
-    public static final String BIN_FILE="bin";
-    public static final String JAVA="java";
-    public static final String COMMAND="-cp";
-    public static final String JAVA_PATH="java.class.path";
+     static final String JAVA_FILE="java.home";
+     static final String BIN_FILE="bin";
+     static final String JAVA="java";
+     static final String COMMAND="-cp";
+     static final String JAVA_PATH="java.class.path";
     static List<String> javaCommand(String className, String... arguments) {
         List<String> command = new ArrayList<>();
         command.add(Path.of(System.getProperty(JAVA_FILE), BIN_FILE, JAVA).toString());

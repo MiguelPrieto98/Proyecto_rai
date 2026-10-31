@@ -34,17 +34,19 @@ public class LiveCashRegister {
     static void runScenario(String tickets, String registerPause, String ledgerPause)
             throws IOException, InterruptedException {
         // TODO fase 4
+        ProcessBuilder cash = new ProcessBuilder();
+        ProcessBuilder ledger = new ProcessBuilder();
     }
 
     /**
      * Construye el comando que ejecuta la clase indicada con la misma JVM y el mismo classpath que
      * este programa. Ya está hecho: es el comandoJava del ejemplo 6.3.
      */
-    public static final String JAVA_FILE="java.home";
-    public static final String BIN_FILE="bin";
-    public static final String JAVA="java";
-    public static final String COMMAND="-cp";
-    public static final String JAVA_PATH="java.class.path";
+     static final String JAVA_FILE="java.home";
+     static final String BIN_FILE="bin";
+     static final String JAVA="java";
+     static final String COMMAND="-cp";
+     static final String JAVA_PATH="java.class.path";
     static List<String> javaCommand(String className, String... arguments) {
         List<String> command = new ArrayList<>();
         command.add(Path.of(System.getProperty(JAVA_FILE), BIN_FILE, JAVA).toString());
