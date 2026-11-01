@@ -23,9 +23,9 @@ public class CashRegister {
     static final String MSG_FINISH = " Tickets finalizado";
     static final String SEPARATOR = ";";
 
-    public static void main(String[] args) throws InterruptedException {
-        int tickets = Integer.parseInt(args[0]);
-        int pause = Integer.parseInt(args[1]);
+    public static void main(String[ ] args) throws InterruptedException {
+        int tickets = Integer.parseInt(args [0]);
+        int pause = Integer.parseInt(args[ 1]);
         Random random = new Random();
 
         // TODO fase 4: para cada ticket, del 1 a tickets, esperar la pausa, escribir en

@@ -23,7 +23,7 @@ public class LiveCashRegister {
     final static String PAUSE_CASH_TWO = "0";
     final static String PAUSE_LEDGER_TWO = "300";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[ ] args) throws IOException, InterruptedException {
         // TODO fase 4: ejecutar los dos escenarios con runScenario(), escribiendo antes
         // cuál es.
         // Escenario 1, caja lenta y registro rápido: 5 tickets; pausa de la caja, 500

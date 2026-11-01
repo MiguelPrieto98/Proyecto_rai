@@ -43,7 +43,7 @@ public class SalesReport {
     static final String ENDREPOR = " su tiempo de ejecución es ";
     static final String FAILSHOPS = "Tiendas que han fallado: ";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[ ] args) throws IOException, InterruptedException {
 
         // TODO fase 2: sustituir lo anterior por el informe uno a uno: report(false).
         long timeSequential = report(false);
@@ -163,10 +163,10 @@ public class SalesReport {
                 int code = child.waitFor();
                 BufferedReader son_departure = child.inputReader();
                 String line = son_departure.readLine();
-                String parts[] = {};
+                String parts[ ] = {};
                 parts = line.split(";");
-                String bugUnits = parts[0].trim();
-                String bugCents = parts[1].trim();
+                String bugUnits = parts[ 0].trim();
+                String bugCents = parts[ 1].trim();
                 long units = Long.parseLong(bugUnits);
                 long cents = Long.parseLong(bugCents);
                 double euros = Double.parseDouble(String.valueOf(cents)) / 100;

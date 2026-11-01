@@ -18,23 +18,23 @@ public class ShopSummary {
 
     static final int SHOPS = 8;
     static final int SALES = 50_000_000; // ventas que se simulan en cada tienda
-    static final int[] PRICES = { 450, 105, 120, 899, 185, 260, 310, 65, 199, 225 }; // céntimos
+    static final int[ ] PRICES = { 450, 105, 120, 899, 185, 260, 310, 65, 199, 225 }; // céntimos
     static final String MESSAGE_FAIL = "Uso: java ShopSummary <tienda>";
     static final String MESSAGE_NUMBER_FAIL = "La tienda tiene que ser un número: ";
     static final String MESSAGE_STORE_DOES_NOT_EXIST = "No existe la tienda ";
     static final String MESSAGE_STORE_NUMBER = ": hay de la 1 a la ";
     static final String SEPARATOR = " ; ";
 
-    public static void main(String[] args) {
+    public static void main(String[ ] args) {
         if (args.length != 1) {
             System.err.println(MESSAGE_FAIL);
             System.exit(1);
         }
         int shop = 0;
         try {
-            shop = Integer.parseInt(args[0]);
+            shop = Integer.parseInt(args[ 0]);
         } catch (NumberFormatException e) {
-            System.err.println(MESSAGE_NUMBER_FAIL + args[0]);
+            System.err.println(MESSAGE_NUMBER_FAIL + args [0]);
             System.exit(1);
         }
         if (shop < 1 || shop > SHOPS) {
@@ -49,7 +49,7 @@ public class ShopSummary {
             int product = random.nextInt(PRICES.length);
             int amount = 1 + random.nextInt(5);
             units += amount;
-            cents += amount * PRICES[product];
+            cents += amount * PRICES [product];
         }
         System.out.println(units + SEPARATOR + cents);
     }

@@ -29,8 +29,8 @@ public class Ledger {
     static final String TICKETS = " tickets ";
     static final String EUROS = " Euros ";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        int pause = Integer.parseInt(args[0]);
+    public static void main(String[ ] args) throws IOException, InterruptedException {
+        int pause = Integer.parseInt(args [0]);
         BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
 
         // TODO fase 4: leer los tickets de la entrada estándar, línea a línea, hasta
@@ -46,10 +46,10 @@ public class Ledger {
         String line;
         while ((line = read.readLine()) != null) {
             tickts++;
-            String[] parts = line.split(";");
-            int cents = Integer.parseInt(parts[1]);
+            String [] parts = line.split(";");
+            int cents = Integer.parseInt(parts[ 1]);
             total_cents += cents;
-            System.err.println(LocalTime.now().format(TIME) + MSG_LEADGER + parts[0] + SPACE + parts[1]);
+            System.err.println(LocalTime.now().format(TIME) + MSG_LEADGER + parts [0] + SPACE + parts [1]);
             Thread.sleep(pause);
 
         }
