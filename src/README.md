@@ -92,6 +92,61 @@ Aunque se ejecuten los ocho procesos a la vez, existen costes de creación y ges
     El total de unidades es 0
     El total de centimos es 0
     Su tiempo de ejecucion es 105 ms
+#### Fase 5
+    "C:\Program Files\Java\jdk\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2026.2.3\lib\idea_rt.jar=50481" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath C:\Users\migue\Proyectos\Proyecto_rai\out\production\Proyecto_rai SalesReport
+    La tienda 1 El pid del hijo es 28564 El total de unidades es 150007132 El total de euros es 422699468,09
+    El hijo lanzo un pid 28564; Su salida es : 150007132 ; 42269946809
+    El hijo ha terminado con el código 0
+    La tienda 2 El pid del hijo es 29236 El total de unidades es 150008398 El total de euros es 422697441,81
+    El hijo lanzo un pid 29236; Su salida es : 150008398 ; 42269744181
+    El hijo ha terminado con el código 0
+    La tienda 3 El pid del hijo es 7748 El total de unidades es 149991121 El total de euros es 422677286,83
+    El hijo lanzo un pid 7748; Su salida es : 149991121 ; 42267728683
+    El hijo ha terminado con el código 0
+    La tienda 4 El pid del hijo es 23432 El total de unidades es 150001401 El total de euros es 422566094,07
+    El hijo lanzo un pid 23432; Su salida es : 150001401 ; 42256609407
+    El hijo ha terminado con el código 0
+    La tienda 5 El pid del hijo es 23664 El total de unidades es 149985543 El total de euros es 422758599,64
+    El hijo lanzo un pid 23664; Su salida es : 149985543 ; 42275859964
+    El hijo ha terminado con el código 0
+    La tienda 6 El pid del hijo es 1080 El total de unidades es 150012774 El total de euros es 422710553,98
+    El hijo lanzo un pid 1080; Su salida es : 150012774 ; 42271055398
+    El hijo ha terminado con el código 0
+    La tienda 7 El pid del hijo es 24276 El total de unidades es 150001397 El total de euros es 422814998,53
+    El hijo lanzo un pid 24276; Su salida es : 150001397 ; 42281499853
+    El hijo ha terminado con el código 0
+    La tienda 8 El pid del hijo es 29804 El total de unidades es 150006583 El total de euros es 422747495,75
+    El hijo lanzo un pid 29804; Su salida es : 150006583 ; 42274749575
+    El hijo ha terminado con el código 0
+    El total de unidades es 1200014349 El total de centimos es 338167193870 su tiempo de ejecución es 6288
+    La tienda 1 El pid del hijo es 20868 El total de unidades es 150007132 El total de euros es 422699468,09
+    El hijo lanzo un pid 20868; Su salida es : 150007132 ; 42269946809
+    El hijo ha terminado con el código 0
+    La tienda 2 El pid del hijo es 24996 El total de unidades es 150008398 El total de euros es 422697441,81
+    El hijo lanzo un pid 24996; Su salida es : 150008398 ; 42269744181
+    El hijo ha terminado con el código 0
+    La tienda 3 El pid del hijo es 6780 El total de unidades es 149991121 El total de euros es 422677286,83
+    El hijo lanzo un pid 6780; Su salida es : 149991121 ; 42267728683
+    El hijo ha terminado con el código 0
+    La tienda 4 El pid del hijo es 27652 El total de unidades es 150001401 El total de euros es 422566094,07
+    El hijo lanzo un pid 27652; Su salida es : 150001401 ; 42256609407
+    El hijo ha terminado con el código 0
+    La tienda 5 El pid del hijo es 25148 El total de unidades es 149985543 El total de euros es 422758599,64
+    El hijo lanzo un pid 25148; Su salida es : 149985543 ; 42275859964
+    El hijo ha terminado con el código 0
+    La tienda 6 El pid del hijo es 24908 El total de unidades es 150012774 El total de euros es 422710553,98
+    El hijo lanzo un pid 24908; Su salida es : 150012774 ; 42271055398
+    El hijo ha terminado con el código 0
+    La tienda 7 El pid del hijo es 7420 El total de unidades es 150001397 El total de euros es 422814998,53
+    El hijo lanzo un pid 7420; Su salida es : 150001397 ; 42281499853
+    El hijo ha terminado con el código 0
+    La tienda 8 El pid del hijo es 19940 El total de unidades es 150006583 El total de euros es 422747495,75
+    El hijo lanzo un pid 19940; Su salida es : 150006583 ; 42274749575
+    El hijo ha terminado con el código 0
+    Las tiendas   El total de unidades es 1200014349 El total de centimos es 338167193870 su tiempo de ejecución es 923
+    El informe en paralelo ha ido 6,81 veces más rápido que el secuencial.
+    
+    Process finished with exit code 0
 
 
 ## Caja en directo

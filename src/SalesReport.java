@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class SalesReport {
 
-    static final int SHOPS = 9; // número de tiendas; en la fase 3, probad con 9
-    static final int TIMEOUT = 0; // segundos de espera máxima por hijo; en la fase 3, probad con 0
+    static final int SHOPS = 8; // número de tiendas; en la fase 3, probad con 9
+    static final int TIMEOUT = 30; // segundos de espera máxima por hijo; en la fase 3, probad con 0
     static final Locale ES = Locale.of("es", "ES"); // para escribir los números con formato español
 
     static long totalUnits = 0; // unidades vendidas en todas las tiendas
@@ -39,18 +39,19 @@ public class SalesReport {
     static final String TC = " El total de centimos es ";
     static final String EUROS = " El total de euros es ";
     static final String SHOP = " La tienda ";
+    static final String G_SHOP = " Las tiendas  ";
     static final String ENDREPOR = " su tiempo de ejecución es ";
     static final String FAILSHOPS = "Tiendas que han fallado: ";
-    static final String FAILMSP = " El proceso";
-    static final String FAILMSGC = " ha fallado con código ";
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // TODO fase 2: sustituir lo anterior por el informe uno a uno: report(false).
-        report(false);
+        long timeSequential = report(false);
         // TODO fase 5: hacer el informe uno a uno y después todos a la vez, y escribir
-        // cuántas
-        // veces más rápido va el segundo.
+        // cuántas veces más rápido va el segundo.
+        long timeConcurrent = report(true);
+        double seep = (double) timeSequential / timeConcurrent;
+        System.out.printf("El informe en paralelo ha ido %.2f veces más rápido que el secuencial.\n", seep);
     }
 
     /**
@@ -87,19 +88,20 @@ public class SalesReport {
             System.out.println(TU + totalUnits + TC + totalCents + ENDREPOR + totaltime);
         }
         if (allAtOnce) {
-
+            reportStart = System.currentTimeMillis();
+            for (int i = 0; i < SHOPS; i++) {
+                int idstore = 1 + i;
+                Process store = launch(idstore);
+                stores.add(store);
+            }
             int idstore = 1;
             for (Process store : stores) {
                 collect(store, idstore);
-                int codew = store.waitFor();
                 idstore++;
-                if (codew != 0) {
-                    throw new IllegalStateException(FAILMSP + store.pid() + FAILMSGC + codew);
-                }
             }
             reportEnd = System.currentTimeMillis();
             totaltime = (reportEnd - reportStart);
-            System.out.println(TU + totalUnits + TC + totalCents + ENDREPOR + totaltime);
+            System.out.println(G_SHOP + TU + totalUnits + TC + totalCents + ENDREPOR + totaltime);
 
         }
 
