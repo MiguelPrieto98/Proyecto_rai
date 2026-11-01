@@ -276,7 +276,8 @@ En el escenario 1, CashRegister (productor) genera los datos sin pausa mientras 
 
 - Escenario 2
 En el escenario 2, CashRegister (productor) introduce una pausa de 300 ms, mientras que Ledger (consumidor) genera los tickets sin pausas. En este caso, los tickets se generan todos en el tiempo en que el productor está pausado; por lo tanto, una vez que sale de la pausa se han generado todos los tickets y se ejecuta el productor con todos ellos.
-- ! Version java   (imgs\image.png)
+- ! Version java(imgs\image.png)
+
 ## Depuración
 - La fase 1 resultó bastante directa de implementar. La fase 2 requirió más tiempo porque fue necesario coordinar correctamente los métodos launch(), collect() y report(), además de comprender el intercambio de información entre procesos padre e hijo.
 - Durante el desarrollo también fue necesario ajustar el identificador de tienda, ya que el bucle comenzaba en 0 mientras que las tiendas válidas iban de la 1 a la 8. Se solucionó utilizando una variable auxiliar con i + 1 para trabajar con el identificador real de tienda.
