@@ -6,12 +6,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 /**
- * Consumidor de la caja en directo (proyecto A01.5). Esqueleto: completad el TODO en la fase 4.
+ * Consumidor de la caja en directo (proyecto A01.5). Esqueleto: completad el
+ * TODO en la fase 4.
  * Se adapta del Consumidor del ejemplo 8.4.
  *
- * Un registro que lee tickets de su entrada estándar ("número;céntimos"), suma sus importes y
- * espera una pausa después de cada uno. Cuando la entrada se acaba, escribe en la salida
- * estándar el número de tickets y el total. Anota en la salida de error la hora a la que lee
+ * Un registro que lee tickets de su entrada estándar ("número;céntimos"), suma
+ * sus importes y
+ * espera una pausa después de cada uno. Cuando la entrada se acaba, escribe en
+ * la salida
+ * estándar el número de tickets y el total. Anota en la salida de error la hora
+ * a la que lee
  * cada ticket.
  *
  * Uso: java Ledger <pausa en ms>
@@ -19,35 +23,37 @@ import java.util.Locale;
 public class Ledger {
 
     static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");// hora con ms
-    static final String MSG_LEADGER="";
-    static final String SPACE=" ";
-    static final String EDN=" leadger fin de la entrada: ";
-    static final String TICKETS=" tickets ";
-    static final String EUROS=" Euros ";
-
+    static final String MSG_LEADGER = "";
+    static final String SPACE = " ";
+    static final String EDN = " leadger fin de la entrada: ";
+    static final String TICKETS = " tickets ";
+    static final String EUROS = " Euros ";
 
     public static void main(String[] args) throws IOException, InterruptedException {
         int pause = Integer.parseInt(args[0]);
-        BufferedReader read = new BufferedReader( new InputStreamReader(System.in));
+        BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
 
-        // TODO fase 4: leer los tickets de la entrada estándar, línea a línea, hasta que se acabe;
-        //      sumar sus importes, anotar en la salida de error la hora (TIME) y el número de cada
-        //      ticket y esperar la pausa después de cada uno. Al terminar, escribir en la salida
-        //      estándar el número de tickets y el total en euros.
-        int tickts=0;
-        int total_cents=0;
+        // TODO fase 4: leer los tickets de la entrada estándar, línea a línea, hasta
+        // que se acabe;
+        // sumar sus importes, anotar en la salida de error la hora (TIME) y el número
+        // de cada
+        // ticket y esperar la pausa después de cada uno. Al terminar, escribir en la
+        // salida
+        // estándar el número de tickets y el total en euros.
+        int tickts = 0;
+        int total_cents = 0;
         double total_euros = 0;
         String line;
-        while((line = read.readLine())!=null){
+        while ((line = read.readLine()) != null) {
             tickts++;
-            String [] parts=line.split(";");
+            String[] parts = line.split(";");
             int cents = Integer.parseInt(parts[1]);
-            total_cents+=cents;
-            System.err.println(LocalTime.now().format(TIME)+MSG_LEADGER+parts[0]+SPACE+parts[1]);
+            total_cents += cents;
+            System.err.println(LocalTime.now().format(TIME) + MSG_LEADGER + parts[0] + SPACE + parts[1]);
             Thread.sleep(pause);
 
         }
-        total_euros=  (double) total_cents /100;
-        System.out.println(EDN+tickts+TICKETS+total_euros+EUROS);
+        total_euros = (double) total_cents / 100;
+        System.out.println(EDN + tickts + TICKETS + total_euros + EUROS);
     }
 }

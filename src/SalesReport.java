@@ -7,104 +7,136 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Proceso padre del informe de ventas (proyecto A01.5). Esqueleto: completad los TODO en la fase
+ * Proceso padre del informe de ventas (proyecto A01.5). Esqueleto: completad
+ * los TODO en la fase
  * que indica cada uno.
  *
- * Lanza un proceso hijo ShopSummary por cada tienda, recoge sus resultados, comprueba sus
- * códigos de salida y escribe el informe con el total. Lo hace dos veces, para comparar el
- * tiempo: primero uno a uno (cada hijo cuando ha terminado el anterior) y después todos a la
+ * Lanza un proceso hijo ShopSummary por cada tienda, recoge sus resultados,
+ * comprueba sus
+ * códigos de salida y escribe el informe con el total. Lo hace dos veces, para
+ * comparar el
+ * tiempo: primero uno a uno (cada hijo cuando ha terminado el anterior) y
+ * después todos a la
  * vez. La salida de error de los hijos se ve en la consola del padre.
  *
  * Uso: java SalesReport
  */
 public class SalesReport {
 
-    static final int SHOPS = 9;     // número de tiendas; en la fase 3, probad con 9
-    static final int TIMEOUT = 0;  // segundos de espera máxima por hijo; en la fase 3, probad con 0
-    static final Locale ES = Locale.of("es", "ES");  // para escribir los números con formato español
+    static final int SHOPS = 9; // número de tiendas; en la fase 3, probad con 9
+    static final int TIMEOUT = 0; // segundos de espera máxima por hijo; en la fase 3, probad con 0
+    static final Locale ES = Locale.of("es", "ES"); // para escribir los números con formato español
 
-    static long totalUnits = 0;  // unidades vendidas en todas las tiendas
-    static long totalCents = 0;  // importe de todas las tiendas, en céntimos
+    static long totalUnits = 0; // unidades vendidas en todas las tiendas
+    static long totalCents = 0; // importe de todas las tiendas, en céntimos
     static int failedShops = 0;// tiendas que han fallado o no han respondido a tiempo (fase 3)
-     static final String  MESSAGE_PID_CHILD= "El hijo lanzo un pid ";
-     static final String MESSAGE_CHILD_DEPARTURE="; Su salida es : ";
-     static final String MESSAGE_CODE_END=" El hijo ha terminado con el código ";
-     static final String SON="ShopSummary";
-     static final String PID=" El pid del hijo es ";
-     static final String TU=" El total de unidades es ";
-     static final String TC=" El total de centimos es ";
-     static final String EUROS=" El total de euros es ";
-     static final String SHOP=" La tienda ";
-     static final String ENDREPOR=" su tiempo de ejecucion es ";
-     static final String FAILSHOPS="Tiendas que han fallado: ";
+    static final String MESSAGE_PID_CHILD = "El hijo lanzo un pid ";
+    static final String MESSAGE_CHILD_DEPARTURE = "; Su salida es : ";
+    static final String MESSAGE_CODE_END = " El hijo ha terminado con el código ";
+    static final String SON = "ShopSummary";
+    static final String PID = " El pid del hijo es ";
+    static final String TU = " El total de unidades es ";
+    static final String TC = " El total de centimos es ";
+    static final String EUROS = " El total de euros es ";
+    static final String SHOP = " La tienda ";
+    static final String ENDREPOR = " su tiempo de ejecución es ";
+    static final String FAILSHOPS = "Tiendas que han fallado: ";
+    static final String FAILMSP = " El proceso";
+    static final String FAILMSGC = " ha fallado con código ";
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // TODO fase 2: sustituir lo anterior por el informe uno a uno: report(false).
         report(false);
-        // TODO fase 5: hacer el informe uno a uno y después todos a la vez, y escribir cuántas
-        //      veces más rápido va el segundo.
+        // TODO fase 5: hacer el informe uno a uno y después todos a la vez, y escribir
+        // cuántas
+        // veces más rápido va el segundo.
     }
 
     /**
-     * Hace el informe de todas las tiendas, de la 1 a SHOPS, y devuelve lo que ha tardado, en
-     * milisegundos. Pone los totales a 0, lanza los hijos con launch(), recoge sus resultados con
+     * Hace el informe de todas las tiendas, de la 1 a SHOPS, y devuelve lo que ha
+     * tardado, en
+     * milisegundos. Pone los totales a 0, lanza los hijos con launch(), recoge sus
+     * resultados con
      * collect() y escribe el total, las tiendas con problemas y el tiempo.
      *
-     * @param allAtOnce false: uno a uno, cada hijo cuando ha terminado el anterior (fase 2);
-     *                  true: todos a la vez, todos los hijos antes de esperar a ninguno (fase 5)
+     * @param allAtOnce false: uno a uno, cada hijo cuando ha terminado el anterior
+     *                  (fase 2);
+     *                  true: todos a la vez, todos los hijos antes de esperar a
+     *                  ninguno (fase 5)
      * @return lo que ha tardado el informe, en milisegundos
      */
     static long report(boolean allAtOnce) throws IOException, InterruptedException {
-        totalUnits=0;
-        totalCents=0;
-        long totaltime=0;
-        long reportStart=0,reportEnd=0;
+        totalUnits = 0;
+        totalCents = 0;
+        long totaltime = 0;
+        long reportStart = 0, reportEnd = 0;
         ArrayList<Process> stores = new ArrayList<Process>();
-        reportStart=System.currentTimeMillis();
-        for(int i=0;i<SHOPS;i++){
-           int idstore=i+1;
-            Process store;
-            store= launch(idstore);
-            stores.add(store);
-            collect(store,idstore);
+        if (!allAtOnce) {
+
+            reportStart = System.currentTimeMillis();
+            for (int i = 0; i < SHOPS; i++) {
+                int idstore = i + 1;
+                Process store;
+                store = launch(idstore);
+                stores.add(store);
+                collect(store, idstore);
+            }
+            reportEnd = System.currentTimeMillis();
+            totaltime = (reportEnd - reportStart);
+            System.out.println(TU + totalUnits + TC + totalCents + ENDREPOR + totaltime);
         }
-        reportEnd=System.currentTimeMillis();
-        totaltime =  (reportEnd-reportStart);
-        System.out.println(TU+totalUnits+TC+totalCents+ENDREPOR+totaltime );
+        if (allAtOnce) {
 
+            int idstore = 1;
+            for (Process store : stores) {
+                collect(store, idstore);
+                int codew = store.waitFor();
+                idstore++;
+                if (codew != 0) {
+                    throw new IllegalStateException(FAILMSP + store.pid() + FAILMSGC + codew);
+                }
+            }
+            reportEnd = System.currentTimeMillis();
+            totaltime = (reportEnd - reportStart);
+            System.out.println(TU + totalUnits + TC + totalCents + ENDREPOR + totaltime);
 
-
+        }
 
         // TODO fases 2 y 5
         return totaltime;
     }
 
     /**
-     * Lanza un ShopSummary para la tienda indicada, con javaCommand(): le pasa la tienda por
-     * argumento y hereda su salida de error, para que sus mensajes se vean en la consola.
+     * Lanza un ShopSummary para la tienda indicada, con javaCommand(): le pasa la
+     * tienda por
+     * argumento y hereda su salida de error, para que sus mensajes se vean en la
+     * consola.
      *
      * @param shop número de la tienda
      * @return el proceso hijo, ya lanzado
      */
     static Process launch(int shop) throws IOException {
 
-            List<String> command = javaCommand(SON, String.valueOf(shop));
-            ProcessBuilder pb = new ProcessBuilder(command);
-             pb.redirectError(ProcessBuilder.Redirect.INHERIT);
-             Process son = pb.start();
+        List<String> command = javaCommand(SON, String.valueOf(shop));
+        ProcessBuilder pb = new ProcessBuilder(command);
+        pb.redirectError(ProcessBuilder.Redirect.INHERIT);
+        Process son = pb.start();
 
-            return son;
-        }
-
+        return son;
+    }
 
     /**
      * Recoge el resultado de un hijo y lo suma a los totales.
      *
-     * Fase 2: lee su resultado de la salida estándar ("unidades;céntimos"), escribe la línea de la
-     * tienda con su PID, las unidades y el importe en euros, y lo suma a totalUnits y totalCents.
-     * Fase 3: antes, lo espera como mucho TIMEOUT segundos y, si no ha terminado, lo termina. Si
-     * su código de salida no es 0, no lee su resultado: escribe qué tienda ha fallado y con qué
+     * Fase 2: lee su resultado de la salida estándar ("unidades;céntimos"), escribe
+     * la línea de la
+     * tienda con su PID, las unidades y el importe en euros, y lo suma a totalUnits
+     * y totalCents.
+     * Fase 3: antes, lo espera como mucho TIMEOUT segundos y, si no ha terminado,
+     * lo termina. Si
+     * su código de salida no es 0, no lee su resultado: escribe qué tienda ha
+     * fallado y con qué
      * código. En los dos casos, suma 1 a failedShops.
      *
      * @param child el proceso hijo
@@ -112,35 +144,35 @@ public class SalesReport {
      */
     static void collect(Process child, int shop) throws IOException, InterruptedException {
         // TODO fases 2 y 3
-        boolean finishedOnTime= child.waitFor(TIMEOUT,TimeUnit.SECONDS);
+        boolean finishedOnTime = child.waitFor(TIMEOUT, TimeUnit.SECONDS);
 
-        if(!finishedOnTime){
+        if (!finishedOnTime) {
 
             child.destroyForcibly();
             child.waitFor();
             failedShops++;
-            System.out.println(FAILSHOPS+failedShops);
+            System.out.println(FAILSHOPS + failedShops);
 
-        }else {
-                if(child.exitValue()!=0){
-                    failedShops++;
-                    System.out.println(FAILSHOPS+failedShops);
-            } else{
-                int code =child.waitFor();
-            BufferedReader son_departure =child.inputReader();
-            String line =son_departure.readLine();
-            String parts[]={};
-            parts= line.split(";");
-            String bugUnits =parts[0].trim();
-            String bugCents =parts[1].trim();
-            long units = Long.parseLong(bugUnits);
-            long cents = Long.parseLong(bugCents);
-            double euros = Double.parseDouble(String.valueOf(cents))/100;
-            totalUnits +=units;
-            totalCents +=cents;
-            System.out.printf("%s%d%s%d%s%d%s%.2f%n", SHOP, shop, PID, child.pid(), TU, units, EUROS, euros);
-            System.out.println(MESSAGE_PID_CHILD + child.pid() + MESSAGE_CHILD_DEPARTURE + line);
-            System.out.println(MESSAGE_CODE_END+code);
+        } else {
+            if (child.exitValue() != 0) {
+                failedShops++;
+                System.out.println(FAILSHOPS + failedShops);
+            } else {
+                int code = child.waitFor();
+                BufferedReader son_departure = child.inputReader();
+                String line = son_departure.readLine();
+                String parts[] = {};
+                parts = line.split(";");
+                String bugUnits = parts[0].trim();
+                String bugCents = parts[1].trim();
+                long units = Long.parseLong(bugUnits);
+                long cents = Long.parseLong(bugCents);
+                double euros = Double.parseDouble(String.valueOf(cents)) / 100;
+                totalUnits += units;
+                totalCents += cents;
+                System.out.printf("%s%d%s%d%s%d%s%.2f%n", SHOP, shop, PID, child.pid(), TU, units, EUROS, euros);
+                System.out.println(MESSAGE_PID_CHILD + child.pid() + MESSAGE_CHILD_DEPARTURE + line);
+                System.out.println(MESSAGE_CODE_END + code);
             }
 
         }
@@ -148,14 +180,16 @@ public class SalesReport {
     }
 
     /**
-     * Construye el comando que ejecuta la clase indicada con la misma JVM y el mismo classpath que
+     * Construye el comando que ejecuta la clase indicada con la misma JVM y el
+     * mismo classpath que
      * este programa. Ya está hecho: es el comandoJava del ejemplo 6.3.
      */
-     static final String JAVA_FILE="java.home";
-     static final String BIN_FILE="bin";
-     static final String JAVA="java";
-     static final String COMMAND="-cp";
-     static final String JAVA_PATH="java.class.path";
+    static final String JAVA_FILE = "java.home";
+    static final String BIN_FILE = "bin";
+    static final String JAVA = "java";
+    static final String COMMAND = "-cp";
+    static final String JAVA_PATH = "java.class.path";
+
     static List<String> javaCommand(String className, String... arguments) {
         List<String> command = new ArrayList<>();
         command.add(Path.of(System.getProperty(JAVA_FILE), BIN_FILE, JAVA).toString());
