@@ -284,4 +284,8 @@ En el escenario 2, CashRegister (productor) introduce una pausa de 300 ms, mient
 - Me encontré con un error al convertir los valores a long. Al depurar vi que los datos recibidos del hijo llevaban espacios en blanco ocultos alrededor del separador ;, por lo que el parseo fallaba. La solución fue eliminar esos espacios antes de hacer la conversión.
 - Al probar el informe apareció un error porque el bucle empezaba en 0 y se intentaba lanzar una tienda inexistente. La solución fue crear una variable con i + 1 y usarla como identificador real de tienda.
 - En la fase 3 una de las partes que más me hizo pensar no fue el código en sí, sino el orden de las comprobaciones. Tuve que decidir si comprobar primero el tiempo límite o el código de salida del proceso hijo para asegurar que solo se leyera el resultado cuando el proceso hubiera terminado correctamente.
+- 
+  ## Referencias y Agradecimientos
+
+Este proyecto ha sido desarrollado adaptando y tomando como base los códigos y patrones de ejemplo proporcionados por el profesor en clase para la gestión de procesos en Java, la redirección de flujos estándar y la implementación del patrón productor-consumidor mediante tuberías (*pipes*).
   
