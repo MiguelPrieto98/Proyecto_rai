@@ -14,8 +14,8 @@
 
 ## Cómo se ejecuta
 
-Cómo se compila y qué clases se lanzan, desde la terminal y desde IntelliJ IDEA. Versión de
-Java.
+[Cómo se compila y qué clases se lanzan, desde la terminal y desde IntelliJ IDEA. Versión de
+Java.]
 - Se compila unica y exclusivamente desde IntelliJ IDEA. Se lanzan las clases SalesReport y LieveCashRegister cada cual en su caso correspodiente. 
 - Desde la terminal se ejecutaría usando el comando javac nombre.java y transformalo en un archivo .class que se ejecuta con java nombre.class, pero no lo he relizado por que he considerado con IntelliJ IDEA era mas que suficiente.
 - Desde IntelliJ IDEA. se ejecuta pulsado el botón de ejecución. 
@@ -25,11 +25,11 @@ Java.
 
 | Clase | Papel | Entrada | Salida | Códigos de salida |
 |---|---|---|---|---|
-| `SalesReport` | Es el proceso padre que coordina la ejecución de los informes de las tiendas tanto en modo secuencial como en paralelo utilizando ProcessBuilder, recogiendo los resultados de los hijos, comprobando códigos de salida y calculando la aceleración obtenida.] | [No requiere argumentos externos directos desde unos constantes array en ShoPSumary] | [Salida estándar con los totales de unidades, céntimos y tiempos de ejecución; salida de error con las trazas, PIDs y mensajes heredados de los procesos hijos.] | [0 al finalizar correctamente la ejecución completa.] |
-| `ShopSummary` | Es el proceso hijo que simula las ventas de una tienda concreta (del 1 al X) utilizando una semilla fija basada en el identificador de la tienda para que los resultados sean siempre deterministas.] | [Un único argumento numérico obligatorio que indica el número de la tienda (<tienda>).] | [Salida estándar con una sola línea en formato "unidades;céntimos"; salida de error con los mensajes de control si el argumento o el número de tienda no son válidos.] | [0 si todo va bien, y 1 si el argumento es incorrecto o la tienda no existe.] |
-| `Ledger` | Es el proceso consumidor de la caja en directo que lee los tickets de su entrada estándar ("número;céntimos"), suma los importes, espera una pausa configurable y calcula el total en euros.] | [Un argumento que indica la pausa en milisegundos (<pausa en ms>) y la entrada estándar conectada mediante tubería (pipe).Un argumento que indica la pausa en milisegundos (<pausa en ms>) y la entrada estándar conectada mediante tubería (pipe).] | [Salida estándar con el número total de tickets y el importe global en euros al finalizar la entrada; salida de error con la marca temporal exacta (hora con milisegundos) de la lectura de cada ticket.] | [0 al terminar de procesar toda la entrada.] |
-| `CashRegister` | Es el proceso productor de la caja en directo que emite los tickets de venta con importes aleatorios hacia su salida estándar, aplicando una pausa previa configurable antes de cada uno.] | [Dos argumentos: el número de tickets a generar (<tickets>) y la pausa en milisegundos (<pausa en ms>).] | [Salida estándar con los tickets generados en formato "número;céntimos"; salida de error con las marcas temporales de creación de cada ticket y el aviso de finalización.] | [0 al terminar la emisión de todos los tickets.] |
-| `LiveCashRegister` | Es el proceso padre coordinador que enlaza y sincroniza mediante una tubería (ProcessBuilder.startPipeline()) los procesos CashRegister y Ledger para ejecutar los escenarios en directo.] | [Configuración interna de los escenarios de prueba definidos en el código.] | [Salida estándar y de error combinadas en la del padre reflejando la interacción simultánea de ambos extremos.] | [0 tras coordinar y finalizar ambos procesos] |
+| [`SalesReport`] | [Es el proceso padre que coordina la ejecución de los informes de las tiendas tanto en modo secuencial como en paralelo utilizando ProcessBuilder, recogiendo los resultados de los hijos, comprobando códigos de salida y calculando la aceleración obtenida.] | [No requiere argumentos externos directos desde unos constantes array en ShoPSumary] | [Salida estándar con los totales de unidades, céntimos y tiempos de ejecución; salida de error con las trazas, PIDs y mensajes heredados de los procesos hijos.] | [0 al finalizar correctamente la ejecución completa.] |
+| [`ShopSummary`] | [Es el proceso hijo que simula las ventas de una tienda concreta (del 1 al X) utilizando una semilla fija basada en el identificador de la tienda para que los resultados sean siempre deterministas.] | [Un único argumento numérico obligatorio que indica el número de la tienda (<tienda>).] | [Salida estándar con una sola línea en formato "unidades;céntimos"; salida de error con los mensajes de control si el argumento o el número de tienda no son válidos.] | [0 si todo va bien, y 1 si el argumento es incorrecto o la tienda no existe.] |
+| [`Ledger`] | [Es el proceso consumidor de la caja en directo que lee los tickets de su entrada estándar ("número;céntimos"), suma los importes, espera una pausa configurable y calcula el total en euros.] | [Un argumento que indica la pausa en milisegundos (<pausa en ms>) y la entrada estándar conectada mediante tubería (pipe).Un argumento que indica la pausa en milisegundos (<pausa en ms>) y la entrada estándar conectada mediante tubería (pipe).] | [Salida estándar con el número total de tickets y el importe global en euros al finalizar la entrada; salida de error con la marca temporal exacta (hora con milisegundos) de la lectura de cada ticket.] | [0 al terminar de procesar toda la entrada.] |
+| [`CashRegister`] | [Es el proceso productor de la caja en directo que emite los tickets de venta con importes aleatorios hacia su salida estándar, aplicando una pausa previa configurable antes de cada uno.] | [Dos argumentos: el número de tickets a generar (<tickets>) y la pausa en milisegundos (<pausa en ms>).] | [Salida estándar con los tickets generados en formato "número;céntimos"; salida de error con las marcas temporales de creación de cada ticket y el aviso de finalización.] | [0 al terminar la emisión de todos los tickets.] |
+| [`LiveCashRegister`] | [Es el proceso padre coordinador que enlaza y sincroniza mediante una tubería (ProcessBuilder.startPipeline()) los procesos CashRegister y Ledger para ejecutar los escenarios en directo.] | [Configuración interna de los escenarios de prueba definidos en el código.] | [Salida estándar y de error combinadas en la del padre reflejando la interacción simultánea de ambos extremos.] | [0 tras coordinar y finalizar ambos procesos] |
 
 [Cómo se conectan: qué lanza cada padre, qué se pasan y por dónde.]
  
@@ -46,15 +46,10 @@ Java.
 
 | Prueba | Resultado esperado | Resultado obtenido |
 |---|---|---|
-| Informe de las 8 tiendas | [Obtener el total exacto que marca el enunciado del proyecto para las 8 tiendas simuladas.] | [Cuadró perfecto con 1.200.014.349 unidades y 338.167.193.870 céntimos, registrando 6.288 ms en secuencial y 923 ms en paralelo (6.81x más rápido).] |
+| [Informe de las 8 tiendas] | [Obtener el total exacto que marca el enunciado del proyecto para las 8 tiendas simuladas.] | [Cuadró perfecto con 1.200.014.349 unidades y 338.167.193.870 céntimos, registrando 6.288 ms en secuencial y 923 ms en paralelo (6.81x más rápido).] |
 | [Una tienda que no existe] | [Detectar el fallo de forma controlada por parte del proceso padre, registrando la incidencia sin interrumpir la ejecución principal.] | [Se controlaron correctamente los códigos de salida y el tiempo límite, contabilizando las tiendas fallidas y mostrando los avisos previstos en la fase 3.] |
-#### Informe 8 Tiendas 30 Segundos
-- ![Version java ](imgs/img_1.png)
-#### Informa 9 Tiendas 0 segundos 
-- - ![Version java ](imgs/img_2.png)
 
 ## Tiempos
-
 
 [Tiempo del informe uno a uno y todos a la vez, en vuestro equipo, con el número de núcleos.
 
@@ -281,6 +276,7 @@ En el escenario 1, CashRegister (productor) genera los datos sin pausa mientras 
 
 - Escenario 2
 En el escenario 2, CashRegister (productor) introduce una pausa de 300 ms, mientras que Ledger (consumidor) genera los tickets sin pausas. En este caso, los tickets se generan todos en el tiempo en que el productor está pausado; por lo tanto, una vez que sale de la pausa se han generado todos los tickets y se ejecuta el productor con todos ellos.
+- ![Version java ](imgs\image.png)
 ## Depuración
 - La fase 1 resultó bastante directa de implementar. La fase 2 requirió más tiempo porque fue necesario coordinar correctamente los métodos launch(), collect() y report(), además de comprender el intercambio de información entre procesos padre e hijo.
 - Durante el desarrollo también fue necesario ajustar el identificador de tienda, ya que el bucle comenzaba en 0 mientras que las tiendas válidas iban de la 1 a la 8. Se solucionó utilizando una variable auxiliar con i + 1 para trabajar con el identificador real de tienda.
